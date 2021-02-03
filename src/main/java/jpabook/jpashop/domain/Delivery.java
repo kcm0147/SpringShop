@@ -15,7 +15,7 @@ public class Delivery {
     @Column(name ="delivery_id")
     private Long id;
 
-    @OneToOne(mappedBy = "delivery") // OneToOne의 경우 연관관계의 주인을 누구에게 둬도 상관없지만, 좀더 많이 사용하는 엔티티에 두었다.
+    @OneToOne(mappedBy = "delivery",fetch=FetchType.LAZY) // OneToOne의 경우 연관관계의 주인을 누구에게 둬도 상관없지만, 좀더 많이 사용하는 엔티티에 두었다.
     private Order order;
 
     @Embedded // 엔티티 내장 타

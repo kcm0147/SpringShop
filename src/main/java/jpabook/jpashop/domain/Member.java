@@ -21,6 +21,7 @@ public class Member {
     private Address address;
 
     @OneToMany(mappedBy = "member") // 연관관계의 주인이 Order의 변수이름인 member로 설정한다. 여기에 값을 수정한다해도 값이 변하지 않는다 Order의 member 객체의 값을 변경해야 값이 변경된
-    private List<Order> orderList= new ArrayList<>();
+    private List<Order> orders= new ArrayList<>();
+
 
 }
