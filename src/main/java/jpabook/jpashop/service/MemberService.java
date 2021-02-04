@@ -14,7 +14,7 @@ public class MemberService {
 
     private final MemberRepository memberRepository; // final을 넣는 것을 권
 
-    @Autowired // 생성자 Injection, 혹은 Lombok 사용, 생성자가 하나라면 생략이 가능하다
+    @Autowired // 생성자 Injection, 혹은 Lombok 사용, 생성자가 하나라면 생략이 가능하
     public MemberService(MemberRepository memberRepository){
         this.memberRepository=memberRepository;
     }
