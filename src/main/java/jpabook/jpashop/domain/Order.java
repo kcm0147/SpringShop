@@ -32,7 +32,7 @@ public class Order {
     @JoinColumn(name="delivery_id")
     private Delivery delivery;
 
-    private LocalDateTime orderData; // 주문 시간
+    private LocalDateTime orderDate; // 주문 시간
 
     @Enumerated(EnumType.STRING)
     private OrderStatus status; // 주문 상태 [ORDER,CANCEL]
@@ -55,7 +55,46 @@ public class Order {
         delivery.setOrder(this);
     }
 
+    //== 생성 메서드==//
 
+    public static Order createOrder(Member member, Delivery delivery,OrderItem... orderItems){
+        Order order = new Order();
+        order.setMember(member);
+        order.setDelivery(delivery);
+
+        for(OrderItem orderItem : orderItems){
+            order.addOrderItem(orderItem);
+        }
+
+        order.setStatus(OrderStatus.ORDER);
+        order.setOrderDate(LocalDateTime.now());
+
+        return order;
+    }
+
+    //==비즈니스 로직==//
+
+    public void cancel(){
+        if(delivery.getStatus() == DeliveryStatus.COMP){
+            throw new IllegalStateException("이미 배송완료된 상품이라 취소가 불가능합니다");
+        }
+
+        this.setStatus(OrderStatus.CANCEL);
+
+        for(OrderItem orderItem : this.orderItems){
+            orderItem.cancel();
+        }
+
+    }
+
+    public int getTotalPrice(){
+        int totalPrice = 0;
+        for(OrderItem orderItem : this.orderItems){
+            totalPrice+=orderItem.getTotalPrice();
+        }
+
+        return totalPrice;
+    }
 
 
 }
