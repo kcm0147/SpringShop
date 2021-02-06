@@ -8,9 +8,12 @@ import jpabook.jpashop.domain.item.Item;
 import jpabook.jpashop.repository.ItemRepository;
 import jpabook.jpashop.repository.MemberRepository;
 import jpabook.jpashop.repository.OrderRepository;
+import jpabook.jpashop.repository.OrderSearch;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
 
 @Service
 @Transactional(readOnly=true)
@@ -46,5 +49,10 @@ public class OrderService {
         Order order = orderRepository.findOrder(orderId);
         order.cancel(); // jpa의 강점으로 order의 count값이 작아지면 자동으로 JPA가 query를 이용하여 데이터베이스에 자동으로 적용을 시켜준다.
         //cancel() 뿐만 아니라 entity와 관련된 모든 디비값들은 전부 다!!
+   }
+
+
+   public List<Order> findOrders(OrderSearch orderSearch){
+        return orderRepository.findAllByString(orderSearch);
    }
 }
