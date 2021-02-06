@@ -61,11 +61,15 @@ public class ItemController {
     }
 
     @PostMapping(value = "/items/{itemId}/edit")
-    public String updateItem(@ModelAttribute("form") BookForm form){
+    public String updateItem(@PathVariable Long itemId,@ModelAttribute("form") BookForm form){
 
-        Book book=Book.createBook(form.getName(), form.getPrice(), form.getStockQuantity(),form.getAuthor(),form.getIsbn());
-        book.setId(form.getId());
-        itemService.saveItem(book);
+//        Book book=Book.createBook(form.getName(), form.getPrice(), form.getStockQuantity(),form.getAuthor(),form.getIsbn());
+//        book.setId(form.getId());
+//        itemService.saveItem(book);
+
+        // 위에 이렇게 컨트롤러에서 엔티티를 만드는 것보다, 서비스에서 수정작업을 하는게 좋다
+
+        itemService.updateItem(itemId,form.getName(),form.getPrice(),form.getStockQuantity());
 
         return "redirect:/items";
     }
